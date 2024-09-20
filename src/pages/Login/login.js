@@ -1,6 +1,9 @@
 
 import React, { useState } from "react";
 import './login.css' 
+import Navbar from '../../components/Navbar'
+// This import should probably be changed, getting error but it seemingly works fine 
+
 const Login = () => {
 
     const [username, setUsername] = useState("");
@@ -26,6 +29,8 @@ const Login = () => {
 
 
     return (
+      <div>
+        <Navbar />
         <div className="login-form-container">
           <h2>Login</h2>
           <form onSubmit={handleSubmit}>
@@ -51,6 +56,7 @@ const Login = () => {
             <button type="submit">Login</button>
           </form>
         </div>
+      </div>
       );
     };
 
