@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import './login.css' 
-import Navbar from '../../components/Navbar'
+import Navbar from '../../components/Navbar.js';
 // This import should probably be changed, getting error but it seemingly works fine 
 
 const Login = () => {
