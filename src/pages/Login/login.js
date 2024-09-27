@@ -37,7 +37,7 @@ const Login = () => {
 
     return (
       <div>
-        <Navbar />
+       
         <div className="login-form-container">
           <h2>Login</h2>
           <form onSubmit={handleSubmit}>
