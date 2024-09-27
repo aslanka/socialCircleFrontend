@@ -1,29 +1,36 @@
 
 import React, { useState } from "react";
 import './login.css' 
-import Navbar from '../../components/Navbar.js';
-// This import should probably be changed, getting error but it seemingly works fine 
+
+import { useNavigate } from 'react-router-dom';
+
 
 const Login = () => {
 
-    const [username, setUsername] = useState("");
+    const navigate = useNavigate();
+    const [email, setemail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+
+    const getUsers = async(email, password) => {
+      const data = await fetch("http://localhost:3000/Users")
+      const users = await data.json()
+      const user = users.find((user) => user.email === email && user.password === password);
+      console.log(user)
+      return user;
+    }
+
+    
   
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
       e.preventDefault();
   
       // You can add your authentication logic here
-      if (username === "" || password === "") {
-        setError("Please fill in both fields.");
+      const isUser = await getUsers(email, password);
+      if ( isUser === undefined) {
+        console.log("no user")
       } else {
-        setError("");
-        // Example: send data to server for authentication
-        console.log({ username, password });
-  
-        // Reset form
-        setUsername("");
-        setPassword("");
+        navigate('/dashboard');
       }
     };
 
@@ -35,12 +42,12 @@ const Login = () => {
           <h2>Login</h2>
           <form onSubmit={handleSubmit}>
             <div>
-              <label>Username:</label>
+              <label>email:</label>
               <input
                 type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Enter your username"
+                value={email}
+                onChange={(e) => setemail(e.target.value)}
+                placeholder="Enter your email"
               />
             </div>
             <div>
@@ -54,6 +61,9 @@ const Login = () => {
             </div>
             {error && <p style={{ color: "red" }}>{error}</p>}
             <button type="submit">Login</button>
+            <p>
+        Don't have an account yet? <a href="/register">Sign up</a>
+      </p>
           </form>
         </div>
       </div>
